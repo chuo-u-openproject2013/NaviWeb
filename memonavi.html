@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
-    <title>MemoNavi (Alpha)</title>
+    <title>MemoNavi</title>
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; width: 100%; margin: 0; padding: 0 }
@@ -22,7 +22,7 @@
       function doAction() {
         var opt = {
             enableHighAccuracy: true,
-            timeout: 5000
+            timeout: 10000
         };
         navigator.geolocation.getCurrentPosition(getPosition, error, opt);
       }
@@ -38,7 +38,7 @@
       }
 
       function generateMap(lat, lng) {
-        <!-- 地図 -->
+        // 地図
         var latlng = new google.maps.LatLng(lat, lng);
         var optionsR = {
             zoom: 17,
@@ -55,14 +55,14 @@
             title: "now"
         };
         var markerR = new google.maps.Marker(optionsMR);
-        <!-- ポップアップ表示処理 / mapRは不動とするのでここで行う -->
+        // ポップアップ表示処理 / mapRは不動とするのでここで行う
         var infoR_opt = { content: "You are here" };
         var infoR = new google.maps.InfoWindow(infoR_opt);
         infoR.open(mapR, markerR);
 
 
 
-        <!-- ストリートビュー -->
+        // ストリートビュー 
         var panoramaOptions = {
             position: latlng,
             pov: {
@@ -73,16 +73,16 @@
         var panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"), panoramaOptions);
         mapR.setStreetView(panorama);
 
-        <!-- forTmp -->
+        // tmp
         //registerMemo(35.708507, 139.751831, "Cheap vending machine!");
 
-        <!-- マーカー名を関数内で定義している -->
+        // マーカー名を関数内で定義
         function registerMemo(latTmp, lngTmp, stringTmp) {
           var latlngTmp = new google.maps.LatLng(latTmp, lngTmp);
           var optionsTmp = {
               position: latlngTmp,
               map: mapR,
-              title: "memo" <!-- タイトル被り -->
+              title: "memo" // タイトル被り
           };
           var markerTmp = new google.maps.Marker(optionsTmp);
           var info_optTmp = { content: stringTmp };
@@ -101,8 +101,8 @@
           markersArray.push(markerTmpS);
         }
 
-        <!-- 各種イベントの取扱い -->
-        <!-- 描画以降に登録されたメモだとストリートビューに反映されない仕様? -->
+        // 各種イベントの取扱い
+        // 描画以降に登録されたメモだとストリートビューに反映されない仕様?
         google.maps.event.addListener(mapR, 'dblclick', function(event) {
           strMemo = window.prompt("Input your memo : ", "");
           if(strMemo.size != 0) {
@@ -110,7 +110,7 @@
           }
         });
 
-        <!-- 暫定的に現在地をクリックでマーカー全消し処理 -->
+        // 暫定的に現在地をクリックでマーカー全消し処理 
         google.maps.event.addListener(markerR, 'click', function() {
           ans = confirm("Delete all markers?");
           if(ans==true && markersArray) {
