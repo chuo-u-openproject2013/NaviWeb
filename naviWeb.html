@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
-    <title>MemoNavi</title>
+    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=iso-2022-jp">
+    <title>Navi*Web</title>
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; width: 100%; margin: 0; padding: 0 }
-      h1 { font-size : 12pt; background-color:#33cccc } <!-- 見出しの文字の大きさとその背景色 -->
-      mapContents#div > { 
+      h1 { font-size : 12pt; background-color:#33cccc } 
+      mapContents#div { 
         display: inline-block;
       }
       div#mapR { float: left; }
       div#pano { float: right; }
     </style>
     <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCXNgTxezJ7K_3ymEEyWrKHAlqEiKIHV1s&sensor=true"> <!-- keyはGoogleアカウント毎に固有 -->
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCXNgTxezJ7K_3ymEEyWrKHAlqEiKIHV1s&sensor=true"> 
     </script>
     <script type="text/javascript">
       var markersArray = [];
@@ -38,7 +38,6 @@
       }
 
       function generateMap(lat, lng) {
-        // 地図
         var latlng = new google.maps.LatLng(lat, lng);
         var optionsR = {
             zoom: 17,
@@ -55,14 +54,13 @@
             title: "now"
         };
         var markerR = new google.maps.Marker(optionsMR);
-        // ポップアップ表示処理 / mapRは不動とするのでここで行う
+
         var infoR_opt = { content: "You are here" };
         var infoR = new google.maps.InfoWindow(infoR_opt);
         infoR.open(mapR, markerR);
 
 
 
-        // ストリートビュー 
         var panoramaOptions = {
             position: latlng,
             pov: {
@@ -77,13 +75,12 @@
         <!--
         //registerMemo(35.708507, 139.751831, "Cheap vending machine!"); -->
 
-        // マーカー名を関数内で定義
         function registerMemo(latTmp, lngTmp, stringTmp) {
           var latlngTmp = new google.maps.LatLng(latTmp, lngTmp);
           var optionsTmp = {
               position: latlngTmp,
               map: mapR,
-              title: "memo" // タイトル被り
+              title: "memo" 
           };
           var markerTmp = new google.maps.Marker(optionsTmp);
           var info_optTmp = { content: stringTmp };
@@ -102,8 +99,6 @@
           markersArray.push(markerTmpS);
         }
 
-        // 各種イベントの取扱い
-        // 描画以降に登録されたメモだとストリートビューに反映されない仕様?
         google.maps.event.addListener(mapR, 'dblclick', function(event) {
           strMemo = window.prompt("Input your memo : ", "");
           if(strMemo.size != 0) {
@@ -111,7 +106,6 @@
           }
         });
 
-        // 暫定的に現在地をクリックでマーカー全消し処理 
         google.maps.event.addListener(markerR, 'click', function() {
           ans = confirm("Delete all markers?");
           if(ans==true && markersArray) {
@@ -127,7 +121,7 @@
     </script>
   </head>
   <body onload="doAction()">
-    <h1><u> MemoNavi </u></h1>
+    <h1><u> Navi*Web </u></h1>
     <div id="mapR" style="width:50%; height:100%"></div>
     <div id="pano" style="width:50%; height:100%"></div>
   </body>
